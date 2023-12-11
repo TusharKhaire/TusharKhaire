@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+  <siteMapNode SystemName="Home" appResource="Home" controller="Home" action="Index">
+
+    <siteMapNode SystemName="Master" appResource="Master" PermissionNames="ManageMaster" IconClass="fa-book" >
+      <siteMapNode SystemName="Item Master" appResource="Item Master" PermissionNames="ManageItemMaster" controller="ItemMaster" action="Create" IconClass="fa-dot-circle-o"/>
+      <siteMapNode SystemName="Item Details" appResource="Item Details" PermissionNames="ManageItemDetails" controller="ItemDetails" action="Create" IconClass="fa-dot-circle-o"/>
+          </siteMapNode>
+ </siteMapNode>  
+
+</siteMap>
+----------------------------------------------------- 
+@using TradeApp.WebAdmin.Menu; --> Extension.cs,SiteMapNode.cs,XmlSiteMap.cs.
+@using System.Xml.Linq;
+
+@{
+    //load sitemap
+    var siteMap = new XmlSiteMap("");//User.Identity.GetExternalUPN()
+    siteMap.LoadFrom("~/sitemap.config");
+}
