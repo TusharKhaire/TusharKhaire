@@ -1,0 +1,73 @@
+<select class="input form-control pull-left" style="width:92%" id="ItemMaster" name="ItemMaster" tabindex="2" placeholder="Select Item Master" #compareSpan (load)="compareSpan.focus()">
+    @if (!string.IsNullOrEmpty(Model.ItemMaster))
+    {
+        <option value="@Model.ItemMaster">@Model.ItemMaster </option>
+    }
+</select>
+
+<script>
+ itemName = $("#ItemMaster").select2({
+         ajax: {
+             url: '@Url.Action("GetItemMaster", "ItemMaster")',
+             dataType: 'json',
+             delay: 1000,
+             data: function (params) {
+                 return {
+                     searchText: params.term
+                 };
+             },
+         processResults: function (data, params) {
+             debugger;
+                 return {
+                     results: data
+                 };
+             },
+             cache: true
+     },
+     tags: true,
+     createTag: function (params) {
+         debugger;
+         return {
+             id: params.term,
+             text: params.term,
+             newOption: true
+         }
+     },
+     templateResult: function (data) {
+         var $result = $("<span></span>");
+         $result.text(data.text);
+         if (data.newOption) {
+             $result.append(" <em>(new)</em>");
+         }
+         return $result;
+     },
+
+         escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+         minimumInputLength: 1,
+         width: false,
+         placeholder: ""
+ }).on('select2:select', function () {
+     $("#Description").focus();
+     //alert(this.value);
+     //alert(isGuid(this.value));
+     if (isGuid(this.value)) {
+         $.ajax({
+             data: { id: this.value },
+             dataType: 'json',
+             method: "GET",
+             url: '@Url.Action("GetItemMasterById", "ItemMaster")',
+             success: function (data) {
+                 debugger;
+
+
+             },
+             error: function (request, status, error) {
+                 debugger;
+
+             }
+         });
+     }
+     else {
+     }
+     });;
+</script>
